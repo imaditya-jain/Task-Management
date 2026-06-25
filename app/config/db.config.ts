@@ -31,6 +31,7 @@ const connectToDatabase = async () => {
       console.log("MongoDB connected");
       return mongooseInstance;
     });
+    cached!.promise.catch(() => {});
   }
 
   try {
