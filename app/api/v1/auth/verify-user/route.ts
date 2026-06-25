@@ -25,7 +25,9 @@ export const GET = async(request: NextRequest)=>{
 
         const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id)
 
-       const response =  NextResponse.json({success: true, message:"User verified." },{status:200})
+        const verifiedUser = await User.findById(user._id).select("-password -refreshToken -otp -otpExpiry")
+
+       const response =  NextResponse.json({success: true, message:"User verified.", data: { user: verifiedUser }},{status:200})
 
        setAuthCookies(response, accessToken, refreshToken)
 
